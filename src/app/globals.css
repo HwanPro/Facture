@@ -3,3 +3,8 @@
 @theme inline {
   --font-sans: var(--font-geist);
 }
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}

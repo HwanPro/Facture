@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Expense Tracker OCR
 
-## Getting Started
+Aplicacion de seguimiento de gastos con escaneo de recibos mediante IA (GPT-4o Vision). Construida con Next.js, Prisma y PostgreSQL.
 
-First, run the development server:
+![Screenshot](public/screenshot.png)
+
+## Caracteristicas
+
+- Autenticacion de usuarios (registro/login con JWT)
+- CRUD de gastos con categorias
+- Escaneo de recibos con OCR (GPT-4o Vision)
+- Auto-categorizacion de gastos con IA
+- Administracion de categorias (nombre, icono, color)
+- Presupuestos mensuales por categoria
+- Dashboard con graficos (Recharts)
+- Subida de imagenes a Cloudinary
+- Exportacion de gastos
+- Drag & drop para subir recibos
+
+## Tech Stack
+
+- **Frontend:** Next.js 16, React 19, Tailwind CSS 4
+- **Backend:** Next.js API Routes
+- **Base de datos:** PostgreSQL + Prisma ORM
+- **IA/OCR:** OpenAI GPT-4o Vision
+- **Almacenamiento:** Cloudinary
+- **Graficos:** Recharts
+
+## Instalacion
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clonar el repositorio
+git clone https://github.com/fazt/expense-tracker-ocr.git
+cd expense-tracker-ocr
+
+# Instalar dependencias
+pnpm install
+
+# Configurar variables de entorno
+cp .env.example .env
+# Editar .env con tus credenciales
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Variables de Entorno
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+DATABASE_URL="postgresql://usuario:password@localhost:5432/expense_tracker"
+OPENAI_API_KEY="tu-api-key"
+CLOUDINARY_CLOUD_NAME="tu-cloud-name"
+CLOUDINARY_API_KEY="tu-api-key"
+CLOUDINARY_API_SECRET="tu-api-secret"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Base de Datos
 
-## Learn More
+```bash
+# Sincronizar schema con la base de datos
+npx prisma db push
 
-To learn more about Next.js, take a look at the following resources:
+# Ejecutar seed (categorias iniciales)
+npx prisma db seed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Desarrollo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Abrir [http://localhost:3000](http://localhost:3000) en el navegador.

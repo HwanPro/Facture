@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
       <div className="text-center space-y-6 px-4">
         <div className="text-6xl mb-4">$</div>
         <h1 className="text-5xl font-bold">Expense Tracker</h1>
