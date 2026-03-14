@@ -1,20 +1,23 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  password  String
-  name      String
-  createdAt DateTime  @default(now())
-  expenses  Expense[]
-  budgets   Budget[]
+  id          String       @id @default(cuid())
+  email       String       @unique
+  password    String
+  name        String
+  createdAt   DateTime     @default(now())
+  expenses    Expense[]
+  budgets     Budget[]
+  taxProfile  TaxProfile?
+  incomes     Income[]
+  invoices    Invoice[]
 }
 
 model Category {
@@ -27,17 +30,19 @@ model Category {
 }
 
 model Expense {
-  id          String   @id @default(cuid())
-  amount      Float
-  description String
-  date        DateTime @default(now())
-  receipt     String?
-  ocrText     String?
-  userId      String
-  categoryId  String
-  user        User     @relation(fields: [userId], references: [id])
-  category    Category @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
+  id              String   @id @default(cuid())
+  amount          Float
+  description     String
+  date            DateTime @default(now())
+  receipt         String?
+  ocrText         String?
+  userId          String
+  categoryId      String
+  isTaxDeductible Boolean  @default(false)
+  taxCategory     String?
+  user            User     @relation(fields: [userId], references: [id])
+  category        Category @relation(fields: [categoryId], references: [id])
+  createdAt       DateTime @default(now())
 }
 
 model Budget {
@@ -52,4 +57,50 @@ model Budget {
   createdAt  DateTime @default(now())
 
   @@unique([userId, categoryId, month, year])
+}
+
+model TaxProfile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  ruc              String?
+  dni              String?
+  taxRegime        String?  @default("4ta")
+  suspensionActive Boolean  @default(false)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+}
+
+model Income {
+  id                String   @id @default(cuid())
+  issueDate         DateTime
+  receiptNumber     String
+  clientName        String
+  clientRuc         String
+  amount            Float
+  retention         Float
+  netAmount         Float
+  suspensionApplied Boolean  @default(false)
+  paymentMethod     String?
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+}
+
+model Invoice {
+  id               String   @id @default(cuid())
+  issueDate        DateTime
+  invoiceType      String
+  series           String
+  number           String
+  supplierRuc      String
+  supplierName     String
+  subtotal         Float
+  igv              Float
+  total            Float
+  expenseCategory  String?
+  deductibleRate   Float    @default(0)
+  deductibleValue  Float    @default(0)
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
 }

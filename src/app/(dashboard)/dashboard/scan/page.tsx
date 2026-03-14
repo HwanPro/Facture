@@ -143,7 +143,7 @@ export default function ScanPage() {
             </div>
           )}
         </div>
-        <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
+        <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={handleFile} className="hidden" />
 
         {processing && (
           <div className="mt-4 flex items-center gap-3">
